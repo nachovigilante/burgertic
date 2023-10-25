@@ -1,6 +1,10 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Link from 'next/link';
+import { twMerge } from 'tailwind-merge';
+import { usePathname } from 'next/navigation';
+import Header from '~/components/layout/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,25 +26,7 @@ export default function RootLayout({
                     href="./assets/favicon.ico"
                     type="image/x-icon"
                 />
-                <header>
-                    <div className="container">
-                        <a className="logo" href="./">
-                            <img src="./assets/logo.svg" alt="" />
-                        </a>
-                        <nav>
-                            <ul>
-                                <li>
-                                    <a href="./" className="highlighted">
-                                        Home
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="./menu.html">Menú</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </header>
+                <Header />
                 {children}
             </body>
         </html>
