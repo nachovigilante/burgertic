@@ -627,7 +627,7 @@ nav ul li a.highlighted {
 .add-btn {
     height: 15px;
     width: 15px;
-    background-image: url(/add.svg);
+    background-image: url(/assets/add.svg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -637,7 +637,7 @@ nav ul li a.highlighted {
 .remove-btn {
     height: 15px;
     width: 15px;
-    background-image: url(/remove.svg);
+    background-image: url(/assets/remove.svg);
     background-size: cover;
     background-position: center 6px;
     background-repeat: no-repeat;
