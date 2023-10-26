@@ -1,38 +1,9 @@
+import { Slider } from "../components/Slider";
+
 export default function Home() {
     return (
         <>
-            <div className="carrousel">
-                <div className="slider-container">
-                    <div className="slide">
-                        <img src="./assets/slider/slide1.jpeg" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide2.jpeg" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide3.jpeg" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide4.png" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide5.jpg" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide6.png" alt="" />
-                    </div>
-                    <div className="slide">
-                        <img src="./assets/slider/slide7.png" alt="" />
-                    </div>
-                </div>
-            </div>
-            <div className="carrousel-overlay">
-                <div className="carrousel-controls">
-                    <button id="prev">{`<`}</button>
-                    <div id="bullets"></div>
-                    <button id="next">{'>'}</button>
-                </div>
-            </div>
+            <Slider />
             <section className="novedades">
                 <div className="w-full max-w-[1280px]">
                     <h2>Novedades</h2>

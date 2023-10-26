@@ -23,13 +23,13 @@
     src: url(/assets/FlameSans-Regular.ttf);
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Flame', sans-serif;
     font-weight: 500;
     color: #55291a;
 }
-
-
 
 header {
     display: flex;
@@ -684,7 +684,6 @@ nav ul li a.highlighted {
     border-radius: 10px;
     border: 5px solid #ffffff;
 }
-
 
 /* SLIDER */
 
