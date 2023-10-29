@@ -1,5 +1,7 @@
 import useCart from '~/hooks/useCart';
 import { CartItem } from '~/contexts/CartContext';
+import useOrders from '~/hooks/useOrders';
+import { useState } from 'react';
 
 const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
     const { addItem, removeItem } = useCart();
@@ -28,12 +30,18 @@ const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
 };
 
 export const Pedido = () => {
-    const { cartItems } = useCart();
+    const { cartItems, resetCart } = useCart();
+    const {
+        placeOrder,
+        placeOrderPending,
+        placeOrderError,
+        placeOrderSuccess,
+        placeOrderReset,
+    } = useOrders();
 
     return (
         <div id="pedido">
             <h2>Mi pedido</h2>
-
             <ul>
                 {cartItems.length === 0 && (
                     <p className="empty">Todavía no agregaste nada :(</p>
@@ -43,13 +51,47 @@ export const Pedido = () => {
                 ))}
             </ul>
             {cartItems.length > 0 && (
-                <button id="enviar" className="active">
-                    Pedir
-                </button>
+                <>
+                    <div id="total" className="active mb-3">
+                        Total:{' '}
+                        <span>
+                            $
+                            {cartItems.reduce(
+                                (acc, { item, quantity }) =>
+                                    acc + item.price * quantity,
+                                0,
+                            )}
+                        </span>
+                    </div>
+                    <button
+                        id="enviar"
+                        className="active flex items-center p-0"
+                        onClick={async () => {
+                            placeOrder(cartItems);
+                        }}
+                    >
+                        Pedir
+                    </button>
+                </>
             )}
-            <div id="total">
-                Total: <span>$</span>
-            </div>
+            {(placeOrderPending || placeOrderSuccess || placeOrderError) && (
+                <div className="absolute w-full h-full bg-white -ml-[25px] -mt-[25px] rounded-[10px] flex flex-col gap-3 justify-center items-center">
+                    <div className="flex justify-center items-center flex-grow text-2xl">
+                        {placeOrderPending && <p>Enviando pedido...</p>}
+                        {placeOrderSuccess && <p>Pedido enviado!</p>}
+                        {placeOrderError && <p>Error al enviar el pedido</p>}
+                    </div>
+                    <button
+                        className="text-white bg-primary w-fit rounded-md py-2 px-5 mt-[250px] absolute"
+                        onClick={() => {
+                            resetCart();
+                            placeOrderReset();
+                        }}
+                    >
+                        Hacer otro pedido
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

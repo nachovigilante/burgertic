@@ -606,7 +606,7 @@ nav ul li a.highlighted {
 }
 
 #pedido #enviar.active {
-    display: block;
+    display: flex;
 }
 
 #pedido #total {

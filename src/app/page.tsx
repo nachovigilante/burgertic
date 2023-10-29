@@ -9,7 +9,7 @@ export default function Home() {
                     <h2>Novedades</h2>
                     <div className="novedades-container">
                         <div className="novedad">
-                            <img src="./assets/digital.png" alt="" />
+                            <img src="/assets/digital.png" alt="" />
                             <h3>Descubrí el Reino Digital</h3>
                             <p>
                                 De la mano de Ivo recorre los sinuosos caminos
@@ -21,7 +21,7 @@ export default function Home() {
                             </p>
                         </div>
                         <div className="novedad">
-                            <img src="./assets/mep.png" alt="" />
+                            <img src="/assets/mep.png" alt="" />
                             <h3>¡Compartí entre 3!</h3>
                             <p>
                                 Una <b>M</b>ilanesa gigante con 3 <b>E</b>
