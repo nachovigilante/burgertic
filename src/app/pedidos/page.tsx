@@ -62,7 +62,7 @@ const Pedidos = () => {
     const { orders, isLoading, error } = useOrders();
 
     return (
-        <div className="container pt-10 flex flex-col items-center">
+        <div className="container pt-10 flex flex-col items-center pb-10">
             <h2 className="text-3xl w-full">Tus pedidos</h2>
             {isLoading && <p>Cargando...</p>}
             {error && <p>Error</p>}
