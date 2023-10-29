@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 
-type Plato = {
+export type Product = {
     id: number;
     nombre: string;
     precio: number;
@@ -41,7 +41,7 @@ const Section = ({
                 {isLoading && <p>Cargando...</p>}
                 {error && <p>Error</p>}
                 {items &&
-                    items.map((plato: Plato, i: number) => (
+                    items.map((plato: Product, i: number) => (
                         <div
                             className="item"
                             key={i}

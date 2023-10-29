@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { twMerge } from 'tailwind-merge';
+import useCart from '~/hooks/useCart';
+import { Product } from './Sections';
 
 export const Modal = ({
     itemId,
@@ -21,11 +23,13 @@ export const Modal = ({
         data: item,
         isLoading,
         error,
-    } = useQuery({
+    } = useQuery<Product>({
         queryKey: ['item', itemId],
         queryFn: getItem,
         enabled: open,
     });
+
+    const { addItem } = useCart();
 
     return (
         <>
@@ -73,7 +77,16 @@ export const Modal = ({
                             <p>{item.descripcion}</p>
                         </div>
                     </div>
-                    <button id="add">
+                    <button
+                        id="add"
+                        onClick={() =>
+                            addItem({
+                                id: item.id,
+                                name: item.nombre,
+                                price: item.precio,
+                            })
+                        }
+                    >
                         <div className="add-btn"></div>
                         <span>Agregar</span>
                     </button>

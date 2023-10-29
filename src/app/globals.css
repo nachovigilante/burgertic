@@ -485,7 +485,7 @@ nav ul li a.highlighted {
     background-color: transparent;
     outline: none;
     border-radius: 8px;
-    background-image: url(/close.png);
+    background-image: url(/assets/close.png);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -647,7 +647,7 @@ nav ul li a.highlighted {
 .delete-btn {
     height: 15px;
     width: 15px;
-    background-image: url(/delete.svg);
+    background-image: url(/assets/delete.svg);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
