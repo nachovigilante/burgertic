@@ -11,6 +11,9 @@ const Navbar = () => {
                 <li>
                     <NavLink path="/menu" text="Menu" />
                 </li>
+                <li>
+                    <NavLink path="/pedidos" text="Pedidos" />
+                </li>
             </ul>
         </nav>
     );

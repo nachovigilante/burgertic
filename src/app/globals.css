@@ -23,6 +23,10 @@
     src: url(/assets/FlameSans-Regular.ttf);
 }
 
+* {
+    font-family: 'Flame Sans', sans-serif;
+}
+
 h1,
 h2,
 h3 {

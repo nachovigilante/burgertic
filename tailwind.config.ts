@@ -15,6 +15,10 @@ const config: Config = {
             },
             colors: {
                 background: '#fffcf8',
+                primary: '#d72300',
+            },
+            shadow: {
+                standard: '0px 0px 5px rgba(0, 0, 0, 0.2)',
             },
         },
     },

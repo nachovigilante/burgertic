@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import useAPIQuery from '~/hooks/useAPIQuery';
 
 export type Product = {
     id: number;
@@ -18,12 +19,7 @@ const Section = ({
     type: string;
     featureItem: (id: number) => void;
 }) => {
-    const getItems = async () => {
-        const response = await fetch(`http://localhost:9000/${type}`);
-        const items = await response.json();
-
-        return items;
-    };
+    const { query } = useAPIQuery();
 
     const {
         data: items,
@@ -31,7 +27,7 @@ const Section = ({
         error,
     } = useQuery({
         queryKey: [type],
-        queryFn: getItems,
+        queryFn: () => query<Product[]>(type),
     });
 
     return (
