@@ -29,7 +29,7 @@ const useOrders = () => {
         error,
     } = useQuery({
         queryKey: ['orders'],
-        queryFn: () => query<Order[]>('pedidos'),
+        queryFn: () => query<Order[]>('pedidos/1'),
     });
 
     const orderMutation = useMutation({
