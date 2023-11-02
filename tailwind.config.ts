@@ -16,8 +16,10 @@ const config: Config = {
             colors: {
                 background: '#fffcf8',
                 primary: '#d72300',
+                hover: '#b3280e',
+                active: '#f04c2d',
             },
-            shadow: {
+            boxShadow: {
                 standard: '0px 0px 5px rgba(0, 0, 0, 0.2)',
             },
         },
