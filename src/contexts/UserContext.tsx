@@ -15,6 +15,12 @@ export type UserContextType = {
         password: string,
     ) => Promise<User | { error: string }>;
     logout: () => void;
+    register: (
+        nombre: string,
+        apellido: string,
+        email: string,
+        password: string,
+    ) => Promise<{} | { error: string }>;
 };
 
 const AuthContext = createContext<UserContextType>({
@@ -33,6 +39,9 @@ const AuthContext = createContext<UserContextType>({
         };
     },
     logout: () => {},
+    register: async () => {
+        return {};
+    },
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
@@ -76,8 +85,38 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         });
     };
 
+    const register = async (
+        nombre: string,
+        apellido: string,
+        email: string,
+        password: string,
+    ) => {
+        try {
+            const user = await mutation<
+                {
+                    nombre: string;
+                    apellido: string;
+                    email: string;
+                    password: string;
+                },
+                User
+            >('usuarios/', {
+                nombre,
+                apellido,
+                email,
+                password,
+            });
+
+            return user;
+        } catch (e) {
+            return (await e) as {
+                error: string;
+            };
+        }
+    };
+
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ user, login, logout, register }}>
             {children}
         </AuthContext.Provider>
     );

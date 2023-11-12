@@ -1,16 +1,42 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { Form } from '~/components/auth/Form';
+import useAuth from '~/hooks/useAuth';
 
 const Register = () => {
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const { register } = useAuth();
+    const [error, setError] = useState<string | null>(null);
+    const router = useRouter();
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log('Register');
+        const form = e.currentTarget;
+        console.log(form);
+        const email = e.currentTarget.email.value;
+        const password = e.currentTarget.password.value;
+        const nombre = form.nombre.value;
+        const lastname = form.lastname.value;
+
+        const result = await register(nombre, lastname, email, password);
+
+        if ('error' in result) {
+            console.log(result.error);
+            setError(result.error);
+        } else {
+            router.push('/auth/login');
+        }
     };
 
     return (
         <>
+            {error && (
+                <p className="bg-red-200 border-2 border-red-400 rounded-lg p-2 text-red-700">
+                    {error}
+                </p>
+            )}
             <Form title="Register" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2 text-lg">
                     <label htmlFor="name">Nombre</label>
@@ -18,7 +44,7 @@ const Register = () => {
                         tabIndex={0}
                         className="border border-gray-400 rounded-lg p-3"
                         type="text"
-                        name="name"
+                        name="nombre"
                         id="name"
                     />
                 </div>
@@ -43,15 +69,6 @@ const Register = () => {
                 </div>
                 <div className="flex flex-col gap-2 text-lg">
                     <label htmlFor="password">Contraseña</label>
-                    <input
-                        className="border border-gray-400 rounded-lg p-3"
-                        type="password"
-                        name="password"
-                        id="password"
-                    />
-                </div>
-                <div className="flex flex-col gap-2 text-lg">
-                    <label htmlFor="password">Repetir contraseña</label>
                     <input
                         className="border border-gray-400 rounded-lg p-3"
                         type="password"

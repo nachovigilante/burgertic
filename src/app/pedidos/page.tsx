@@ -1,6 +1,8 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
+import useAuth from '~/hooks/useAuth';
 import useOrders from '~/hooks/useOrders';
 
 const Pedido = ({
@@ -45,7 +47,9 @@ const Pedido = ({
                         >
                             <div className="">
                                 <p>{plato.nombre}</p>
-                                <p className="text-primary text-sm">${plato.precio}</p>
+                                <p className="text-primary text-sm">
+                                    ${plato.precio}
+                                </p>
                             </div>
                             <p className="text-lg bg-primary text-white flex justify-center items-center rounded-md w-[28px] h-[30px]">
                                 {plato.cantidad}
@@ -60,13 +64,22 @@ const Pedido = ({
 
 const Pedidos = () => {
     const { orders, isLoading, error } = useOrders();
+    const { user } = useAuth();
+    const router = useRouter();
+
+    if (user.id === -1) {
+        router.push('/auth/login');
+        return null;
+    }
 
     return (
         <div className="container pt-10 flex flex-col items-center pb-10">
             <h2 className="text-3xl w-full">Tus pedidos</h2>
             {isLoading && <p>Cargando...</p>}
             {error && <p>Error</p>}
-            {!orders && !isLoading && !error && <p>No hay pedidos</p>}
+            {orders && orders.length === 0 && (
+                <p className="text-2xl pt-20">No hay pedidos :(</p>
+            )}
             {orders && (
                 <ul className="mt-8 flex flex-col gap-3 max-w-[600px] w-full">
                     {orders.map((order) => (
