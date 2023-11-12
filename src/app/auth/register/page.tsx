@@ -1,10 +1,17 @@
-import Link from "next/link";
-import { Form } from "~/components/auth/Form";
+'use client';
+
+import Link from 'next/link';
+import { Form } from '~/components/auth/Form';
 
 const Register = () => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        console.log('Register');
+    };
+
     return (
         <>
-            <Form title="Register">
+            <Form title="Register" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2 text-lg">
                     <label htmlFor="name">Nombre</label>
                     <input
@@ -57,10 +64,7 @@ const Register = () => {
                 </button>
                 <div className="flex items-center gap-2 mt-2 justify-center">
                     <p>¿Ya tenés cuenta?</p>{' '}
-                    <Link
-                        href="/auth/login"
-                        className="text-primary underline"
-                    >
+                    <Link href="/auth/login" className="text-primary underline">
                         Iniciar sesión
                     </Link>
                 </div>

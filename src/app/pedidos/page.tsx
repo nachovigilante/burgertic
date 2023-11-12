@@ -66,6 +66,7 @@ const Pedidos = () => {
             <h2 className="text-3xl w-full">Tus pedidos</h2>
             {isLoading && <p>Cargando...</p>}
             {error && <p>Error</p>}
+            {!orders && !isLoading && !error && <p>No hay pedidos</p>}
             {orders && (
                 <ul className="mt-8 flex flex-col gap-3 max-w-[600px] w-full">
                     {orders.map((order) => (
