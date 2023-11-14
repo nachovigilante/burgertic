@@ -24,8 +24,10 @@ export default function RootLayout({
                     href="/assets/favicon.ico"
                     type="image/x-icon"
                 />
-                <Header />
-                <Providers>{children}</Providers>
+                <Providers>
+                    <Header />
+                    {children}
+                </Providers>
             </body>
         </html>
     );
