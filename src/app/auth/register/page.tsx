@@ -22,9 +22,9 @@ const Register = () => {
 
         const result = await register(nombre, lastname, email, password);
 
-        if ('error' in result) {
-            console.log(result.error);
-            setError(result.error);
+        if (result instanceof Error) {
+            console.log(result.message);
+            setError(result.message);
         } else {
             router.push('/auth/login');
         }
