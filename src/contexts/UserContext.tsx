@@ -10,17 +10,14 @@ export type User = {
 
 export type UserContextType = {
     user: User;
-    login: (
-        email: string,
-        password: string,
-    ) => Promise<User | { error: string }>;
+    login: (email: string, password: string) => Promise<User | Error>;
     logout: () => void;
     register: (
         nombre: string,
         apellido: string,
         email: string,
         password: string,
-    ) => Promise<{} | { error: string }>;
+    ) => Promise<boolean | Error>;
 };
 
 const AuthContext = createContext<UserContextType>({
@@ -40,7 +37,7 @@ const AuthContext = createContext<UserContextType>({
     },
     logout: () => {},
     register: async () => {
-        return {};
+        return false;
     },
 });
 
@@ -56,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     const login = async (email: string, password: string) => {
         try {
-            const user = await mutation<
+            const { response, status } = await mutation<
                 {
                     email: string;
                     password: string;
@@ -67,12 +64,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 password: password,
             });
 
-            setUser(user);
-            return user;
+            if (status !== 200) throw new Error('Error al iniciar sesión');
+
+            setUser(response!);
+            return response!;
         } catch (e) {
-            return (await e) as {
-                error: string;
-            };
+            return e as Error;
         }
     };
 
@@ -92,7 +89,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         password: string,
     ) => {
         try {
-            const user = await mutation<
+            const { response, status } = await mutation<
                 {
                     nombre: string;
                     apellido: string;
@@ -107,11 +104,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 password,
             });
 
-            return user;
+            if (status !== 200) throw new Error('Error al registrar usuario');
+
+            return true;
         } catch (e) {
-            return (await e) as {
-                error: string;
-            };
+            return e as Error;
         }
     };
 

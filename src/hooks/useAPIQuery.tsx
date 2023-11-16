@@ -5,7 +5,18 @@ const useAPIQuery = <T,>() => {
                 Authorization: auth ? `${auth}` : '',
             },
         });
-        return (await response.json()) as T;
+        console.log(response.status);
+
+        if (response.status !== 200) {
+            return {
+                status: response.status,
+            };
+        }
+
+        return {
+            response: (await response.json()) as T,
+            status: response.status,
+        };
     };
 
     const mutation = async <T, U>(path: string, data: T, auth?: string) => {
@@ -17,7 +28,17 @@ const useAPIQuery = <T,>() => {
             },
             body: JSON.stringify(data),
         });
-        return (await response.json()) as U;
+
+        if (response.status !== 200) {
+            return {
+                status: response.status,
+            };
+        }
+
+        return {
+            response: (await response.json()) as U,
+            status: response.status,
+        };
     };
 
     return { query, mutation };

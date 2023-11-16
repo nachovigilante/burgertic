@@ -17,8 +17,8 @@ const Login = () => {
         const password = e.currentTarget.password.value;
         console.log(`Login with email: ${email} and password: ${password}`);
         const result = await login(email, password);
-        if ('error' in result) {
-            setError(result.error);
+        if (result instanceof Error) {
+            setError(result.message);
         } else {
             setError(null);
             router.push('/');

@@ -37,7 +37,7 @@ const Section = ({
                 {isLoading && <p>Cargando...</p>}
                 {error && <p>Error</p>}
                 {items &&
-                    items.map((plato: Product, i: number) => (
+                    items!.response!.map((plato: Product, i: number) => (
                         <div
                             className="item"
                             key={i}

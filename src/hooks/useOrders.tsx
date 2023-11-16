@@ -60,7 +60,7 @@ const useOrders = () => {
     };
 
     return {
-        orders,
+        orders: orders?.response,
         isLoading,
         error,
         placeOrder,
