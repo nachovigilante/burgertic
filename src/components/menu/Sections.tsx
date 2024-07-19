@@ -21,13 +21,9 @@ const Section = ({
 }) => {
     const { query } = useAPIQuery();
 
-    const {
-        data: items,
-        isLoading,
-        error,
-    } = useQuery({
+    const { data, isLoading, error } = useQuery({
         queryKey: [type],
-        queryFn: () => query<Product[]>(type),
+        queryFn: () => query<Product[]>(`/platos/tipo/${type}`),
     });
 
     return (
@@ -36,8 +32,8 @@ const Section = ({
             <div className="grid" id={type}>
                 {isLoading && <p>Cargando...</p>}
                 {error && <p>Error</p>}
-                {items &&
-                    items!.response!.map((plato: Product, i: number) => (
+                {data &&
+                    data!.response!.map((plato: Product, i: number) => (
                         <div
                             className="item"
                             key={i}
@@ -61,13 +57,13 @@ export const Sections = ({
 }) => {
     return (
         <div className="sections">
-            <Section title="Combos" type="combos" featureItem={featureItem} />
+            <Section title="Combos" type="combo" featureItem={featureItem} />
             <Section
                 title="Principales"
-                type="principales"
+                type="principal"
                 featureItem={featureItem}
             />
-            <Section title="Postres" type="postres" featureItem={featureItem} />
+            <Section title="Postres" type="postre" featureItem={featureItem} />
         </div>
     );
 };

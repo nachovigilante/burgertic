@@ -1,5 +1,4 @@
 import React, { ReactNode, createContext, useReducer } from 'react';
-import { Product } from '~/components/menu/Sections';
 
 export type Item = {
     id: number;

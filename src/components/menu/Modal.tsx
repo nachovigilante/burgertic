@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { twMerge } from 'tailwind-merge';
 import useCart from '~/hooks/useCart';
 import { Product } from './Sections';
+import useAPIQuery from '~/hooks/useAPIQuery';
 
 export const Modal = ({
     itemId,
@@ -12,20 +13,10 @@ export const Modal = ({
     open: boolean;
     onClose: () => void;
 }) => {
-    const getItem = async () => {
-        const response = await fetch(`http://localhost:9000/menu/${itemId}`);
-        const item = await response.json();
-
-        return item;
-    };
-
-    const {
-        data: item,
-        isLoading,
-        error,
-    } = useQuery<Product>({
+    const { query } = useAPIQuery();
+    const { data, isLoading, error } = useQuery({
         queryKey: ['item', itemId],
-        queryFn: getItem,
+        queryFn: () => query<Product>(`/platos/${itemId}`),
         enabled: open,
     });
 
@@ -55,7 +46,7 @@ export const Modal = ({
                     </span>
                 </div>
             )}
-            {item && (
+            {data && data.response && (
                 <div
                     id="modal"
                     className={twMerge(
@@ -71,19 +62,21 @@ export const Modal = ({
                         <img src="./assets/items/1.png" alt="" />
                         <div className="info">
                             <div className="top">
-                                <h3>{item.nombre}</h3>
-                                <span className="precio">${item.precio}</span>
+                                <h3>{data.response.nombre}</h3>
+                                <span className="precio">
+                                    ${data.response.precio}
+                                </span>
                             </div>
-                            <p>{item.descripcion}</p>
+                            <p>{data.response.descripcion}</p>
                         </div>
                     </div>
                     <button
                         id="add"
                         onClick={() =>
                             addItem({
-                                id: item.id,
-                                name: item.nombre,
-                                price: item.precio,
+                                id: data.response.id,
+                                name: data.response.nombre,
+                                price: data.response.precio,
                             })
                         }
                     >

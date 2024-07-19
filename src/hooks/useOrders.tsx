@@ -32,7 +32,7 @@ const useOrders = () => {
     } = useQuery({
         queryKey: ['orders'],
         queryFn: () =>
-            query<Order[]>('pedidos/', user ? user.id.toString() : ''),
+            query<Order[]>('/pedidos', user ? user.id.toString() : ''),
     });
 
     const orderMutation = useMutation({

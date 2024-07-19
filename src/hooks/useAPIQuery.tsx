@@ -1,11 +1,10 @@
-const useAPIQuery = <T,>() => {
+const useAPIQuery = () => {
     const query = async <T,>(path: string, auth?: string) => {
-        const response = await fetch(`http://localhost:9000/${path}`, {
+        const response = await fetch(`http://localhost:9000${path}`, {
             headers: {
                 Authorization: auth ? `${auth}` : '',
             },
         });
-        console.log(response.status);
 
         if (response.status !== 200) {
             return {
@@ -20,7 +19,7 @@ const useAPIQuery = <T,>() => {
     };
 
     const mutation = async <T, U>(path: string, data: T, auth?: string) => {
-        const response = await fetch(`http://localhost:9000/${path}`, {
+        const response = await fetch(`http://localhost:9000${path}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,6 +27,8 @@ const useAPIQuery = <T,>() => {
             },
             body: JSON.stringify(data),
         });
+
+        console.log(response);
 
         if (response.status !== 200) {
             return {
