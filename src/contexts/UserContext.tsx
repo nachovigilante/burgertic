@@ -6,6 +6,7 @@ export type User = {
     email: string;
     nombre: string;
     apellido: string;
+    admin: boolean;
 };
 
 type LoginCredentials = {
@@ -31,6 +32,7 @@ const AuthContext = createContext<UserContextType>({
         email: '',
         nombre: '',
         apellido: '',
+        admin: false,
     },
     login: async () => {
         return {
@@ -38,6 +40,7 @@ const AuthContext = createContext<UserContextType>({
             email: '',
             nombre: '',
             apellido: '',
+            admin: false,
         };
     },
     logout: () => {},
@@ -54,6 +57,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         email: '',
         nombre: '',
         apellido: '',
+        admin: false,
     });
 
     const setToken = (token: string) => {
@@ -86,6 +90,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             email: '',
             nombre: '',
             apellido: '',
+            admin: false,
         });
     };
 
