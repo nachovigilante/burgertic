@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import useAPIQuery from './useAPIQuery';
 import { CartItem } from '~/contexts/CartContext';
-import useAuth from './useAuth';
 
 export type Order = {
     id: number;
@@ -30,7 +29,7 @@ const useOrders = () => {
         error,
     } = useQuery({
         queryKey: ['orders'],
-        queryFn: () => query<Order[]>('/pedidos', true),
+        queryFn: () => query<Order[]>('/pedidos/usuario', true),
     });
 
     const orderMutation = useMutation({
