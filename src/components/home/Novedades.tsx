@@ -37,9 +37,9 @@ export function Novedades() {
                         imageSrc="/assets/mep.png"
                     />
                     <Novedad
-                        title="¡Los que aman grandes y chicos llegaron a BK!"
-                        description="8 increíbles juguetes de Warner acompañan nuestras cajitas mágicas para que vos o tus peques puedan disfrutarlos como nadie."
-                        imageSrc=""
+                        title="¡Los que aman grandes y chicos llegaron a BT!"
+                        description="8 increíbles juguetes electrónicos acompañan nuestras computadoras nuevas para que puedan disfrutarlos como nadie."
+                        imageSrc="/assets/jr.png"
                     />
                 </div>
             </div>
