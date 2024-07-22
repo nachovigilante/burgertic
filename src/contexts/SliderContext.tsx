@@ -55,14 +55,12 @@ export const SliderProvider = ({ children }: { children: ReactNode }) => {
     const [isDragging, setIsDragging] = useState(false);
     const [currentTranslate, setCurrentTranslate] = useState(0);
     const [prevTranslate, setPrevTranslate] = useState(0);
-    const [slidesCount, setSlidesCount] = useState(4);
+    const [slidesCount, setSlidesCount] = useState(7);
     const [animationID, setAnimationID] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
 
-    function setPositionByIndex() {
+    function updatePosition() {
         setCurrentTranslate(currentIndex * -window.innerWidth);
-        // bulletsContainer.querySelector('.active').classList.remove('active');
-        // bulletsContainer.children[currentIndex].classList.add('active');
         setPrevTranslate(currentIndex * -window.innerWidth);
     }
 
@@ -71,7 +69,7 @@ export const SliderProvider = ({ children }: { children: ReactNode }) => {
     }
 
     useEffect(() => {
-        window.addEventListener('resize', setPositionByIndex);
+        window.addEventListener('resize', updatePosition);
         window.oncontextmenu = function (event) {
             event.preventDefault();
             event.stopPropagation();
@@ -79,19 +77,19 @@ export const SliderProvider = ({ children }: { children: ReactNode }) => {
         };
 
         const interval = setInterval(() => {
-            if (currentIndex >= slidesCount - 1) {
-                setCurrentIndex(0);
-            } else {
-                setCurrentIndex(currentIndex + 1);
-            }
-            setPositionByIndex();
+            console.log('AAAAAA');
+            setCurrentIndex((currentIndex) => (currentIndex + 1) % slidesCount);
         }, 3000);
 
         return () => {
-            window.removeEventListener('resize', setPositionByIndex);
+            window.removeEventListener('resize', updatePosition);
             clearInterval(interval);
         };
     });
+
+    useEffect(() => {
+        updatePosition();
+    }, [currentIndex]);
 
     return (
         <SliderContext.Provider
@@ -111,7 +109,7 @@ export const SliderProvider = ({ children }: { children: ReactNode }) => {
                 animationID,
                 setAnimationID,
                 sliderRef,
-                setPositionByIndex,
+                setPositionByIndex: updatePosition,
                 animation,
             }}
         >

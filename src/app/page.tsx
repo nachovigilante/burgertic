@@ -4,7 +4,7 @@ import { Novedades } from '../components/home/Novedades';
 export default function Home() {
     return (
         <>
-            <Slider />
+            <Slider size={7} />
             <Novedades />
         </>
     );
