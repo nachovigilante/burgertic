@@ -1,8 +1,12 @@
 const useAPIQuery = () => {
-    const query = async <T,>(path: string, auth?: string) => {
+    const query = async <T,>(path: string, auth: boolean = false) => {
+        let token = null;
+
+        if (auth) token = localStorage.getItem('token');
+
         const response = await fetch(`http://localhost:9000${path}`, {
             headers: {
-                Authorization: auth ? `${auth}` : '',
+                Authorization: auth ? `Bearer ${token}` : '',
             },
         });
 
@@ -18,12 +22,20 @@ const useAPIQuery = () => {
         };
     };
 
-    const mutation = async <T, U>(path: string, data: T, auth?: string) => {
+    const mutation = async <T, U>(
+        path: string,
+        data: T,
+        auth: boolean = false,
+    ) => {
+        let token = null;
+
+        if (auth) token = localStorage.getItem('token');
+
         const response = await fetch(`http://localhost:9000${path}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                Authorization: auth ? `${auth}` : '',
+                Authorization: auth ? `Bearer ${token}` : '',
             },
             body: JSON.stringify(data),
         });

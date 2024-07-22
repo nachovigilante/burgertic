@@ -23,7 +23,6 @@ type OrderItem = {
 
 const useOrders = () => {
     const { query, mutation } = useAPIQuery();
-    const { user } = useAuth();
 
     const {
         data: orders,
@@ -31,18 +30,17 @@ const useOrders = () => {
         error,
     } = useQuery({
         queryKey: ['orders'],
-        queryFn: () =>
-            query<Order[]>('/pedidos', user ? user.id.toString() : ''),
+        queryFn: () => query<Order[]>('/pedidos', true),
     });
 
     const orderMutation = useMutation({
         mutationFn: (products: OrderItem[]) => {
-            return mutation<{ productos: OrderItem[] }, { id: number }>(
-                'pedido',
+            return mutation<{ platos: OrderItem[] }, { message: string }>(
+                '/pedidos',
                 {
-                    productos: products,
+                    platos: products,
                 },
-                user ? user.id.toString() : '',
+                true,
             );
         },
     });
@@ -55,7 +53,7 @@ const useOrders = () => {
                     cantidad: quantity,
                 }) as OrderItem,
         );
-        // console.log(products);
+        console.log(products);
         orderMutation.mutate(products);
     };
 

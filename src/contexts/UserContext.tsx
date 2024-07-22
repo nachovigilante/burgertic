@@ -56,6 +56,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         apellido: '',
     });
 
+    const setToken = (token: string) => {
+        localStorage.setItem('token', token);
+    };
+
     const login = async (email: string, password: string) => {
         try {
             const { response, status } = await mutation<
@@ -69,6 +73,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             if (status !== 200) throw new Error('Error al iniciar sesión');
 
             setUser(response!.usuario);
+            setToken(response!.token);
             return response!.usuario;
         } catch (e) {
             return e as Error;

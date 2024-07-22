@@ -1,7 +1,6 @@
 import useCart from '~/hooks/useCart';
 import { CartItem } from '~/contexts/CartContext';
 import useOrders from '~/hooks/useOrders';
-import { useState } from 'react';
 
 const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
     const { addItem, removeItem } = useCart();
@@ -66,9 +65,7 @@ export const Pedido = () => {
                     <button
                         id="enviar"
                         className="active flex items-center p-0"
-                        onClick={async () => {
-                            placeOrder(cartItems);
-                        }}
+                        onClick={async () => placeOrder(cartItems)}
                     >
                         Pedir
                     </button>
@@ -79,7 +76,9 @@ export const Pedido = () => {
                     <div className="flex justify-center items-center flex-grow text-2xl">
                         {placeOrderPending && <p>Enviando pedido...</p>}
                         {placeOrderSuccess && <p>Pedido enviado!</p>}
-                        {placeOrderError && <p>Error al enviar el pedido</p>}
+                        {placeOrderError && (
+                            <p>Error al enviar el pedido: {placeOrderError.message}</p>
+                        )}
                     </div>
                     <button
                         className="text-white bg-primary w-fit rounded-md py-2 px-5 mt-[250px] absolute"
