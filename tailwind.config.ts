@@ -21,6 +21,7 @@ const config: Config = {
             },
             boxShadow: {
                 standard: '0px 0px 5px rgba(0, 0, 0, 0.2)',
+                large: '0px 0px 10px rgba(0, 0, 0, 0.2)',
             },
         },
     },

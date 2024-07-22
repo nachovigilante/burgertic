@@ -22,7 +22,7 @@ const Menu = () => {
 
     return (
         <CartProvider>
-            <div className="container menu">
+            <div className="container flex flex-row gap-5 pt-5 pb-14">
                 <Sections
                     featureItem={(id: number) => {
                         setFeaturedItemId(id);

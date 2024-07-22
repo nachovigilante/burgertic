@@ -6,6 +6,12 @@ export type User = {
     email: string;
     nombre: string;
     apellido: string;
+    admin: boolean;
+};
+
+type LoginCredentials = {
+    email: string;
+    password: string;
 };
 
 export type UserContextType = {
@@ -26,6 +32,7 @@ const AuthContext = createContext<UserContextType>({
         email: '',
         nombre: '',
         apellido: '',
+        admin: false,
     },
     login: async () => {
         return {
@@ -33,6 +40,7 @@ const AuthContext = createContext<UserContextType>({
             email: '',
             nombre: '',
             apellido: '',
+            admin: false,
         };
     },
     logout: () => {},
@@ -42,32 +50,35 @@ const AuthContext = createContext<UserContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-    const { query, mutation } = useAPIQuery();
+    const { mutation } = useAPIQuery();
 
     const [user, setUser] = useState<User>({
         id: -1,
         email: '',
         nombre: '',
         apellido: '',
+        admin: false,
     });
+
+    const setToken = (token: string) => {
+        localStorage.setItem('token', token);
+    };
 
     const login = async (email: string, password: string) => {
         try {
             const { response, status } = await mutation<
-                {
-                    email: string;
-                    password: string;
-                },
-                User
-            >('login/', {
+                LoginCredentials,
+                { usuario: User; token: string }
+            >('/auth/login', {
                 email: email,
                 password: password,
             });
 
             if (status !== 200) throw new Error('Error al iniciar sesión');
 
-            setUser(response!);
-            return response!;
+            setUser(response!.usuario);
+            setToken(response!.token);
+            return response!.usuario;
         } catch (e) {
             return e as Error;
         }
@@ -79,6 +90,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             email: '',
             nombre: '',
             apellido: '',
+            admin: false,
         });
     };
 
@@ -89,7 +101,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         password: string,
     ) => {
         try {
-            const { response, status } = await mutation<
+            const { status } = await mutation<
                 {
                     nombre: string;
                     apellido: string;
@@ -97,7 +109,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                     password: string;
                 },
                 User
-            >('usuarios/', {
+            >('/auth/register', {
                 nombre,
                 apellido,
                 email,

@@ -4,11 +4,11 @@ import useAuth from '~/hooks/useAuth';
 import NavLink from './NavLink';
 
 const Navbar = () => {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
 
     return (
         <nav>
-            <ul className="flex item-center">
+            <ul className="flex item-center gap-2.5">
                 <li>
                     <NavLink path="/" text="Home" />
                 </li>
@@ -25,6 +25,11 @@ const Navbar = () => {
                             <NavLink path="/pedidos" text="Pedidos" />
                         </li>
                     </>
+                )}
+                {user.admin && (
+                    <li>
+                        <NavLink path="/admin" text="Admin" />
+                    </li>
                 )}
             </ul>
         </nav>
