@@ -52,7 +52,6 @@ const useOrders = () => {
                     cantidad: quantity,
                 }) as OrderItem,
         );
-        console.log(products);
         orderMutation.mutate(products);
     };
 
