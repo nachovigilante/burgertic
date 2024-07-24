@@ -59,6 +59,10 @@
         background-image: url(/assets/delete.svg);
     }
 
+    .edit-btn {
+        background-image: url(/assets/edit.svg);
+    }
+
     .close-btn {
         background-image: url(/assets/close.png);
     }
