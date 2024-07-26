@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { twMerge } from 'tailwind-merge';
 import useCart from '~/hooks/useCart';
-import { Product } from './Sections';
 import useAPIQuery from '~/hooks/useAPIQuery';
+import { Product } from '~/hooks/useProducts';
+import { Modal } from '../layout/Modal';
 
-export const Modal = ({
+export const ProductModal = ({
     itemId,
     open,
     onClose,
@@ -23,7 +24,7 @@ export const Modal = ({
     const { addItem } = useCart();
 
     return (
-        <>
+        <Modal open={open} onClose={onClose}>
             {isLoading && (
                 <div className="info">
                     <h2>Error</h2>
@@ -47,17 +48,7 @@ export const Modal = ({
                 </div>
             )}
             {data && data.response && (
-                <div
-                    id="modal"
-                    className={twMerge(
-                        'fixed box opacity-0 pointer-events-none p-8 transition-all duration-300 ease-in-out top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 shadow-large',
-                        isLoading && 'loading',
-                        error && 'error',
-                        open && 'opacity-100 pointer-events-auto',
-                    )}
-                    onBlur={onClose}
-                    tabIndex={1}
-                >
+                <>
                     <button
                         id="close"
                         className="absolute top-2.5 right-2.5 text-3xl cursor-pointer transition-all duration-300 ease-in-out h-[30px] w-[30px] border-none outline-none rounded-lg"
@@ -66,7 +57,11 @@ export const Modal = ({
                         <div className="btn-logo close-btn h-[80%] w-[80%]"></div>
                     </button>
                     <div className="flex items-center justify-between gap-10">
-                        <img className="h-[300px] w-[300px] object-cover rounded-[10px]" src="./assets/items/1.png" alt="Foto del producto" />
+                        <img
+                            className="h-[300px] w-[300px] object-cover rounded-[10px]"
+                            src="./assets/items/1.png"
+                            alt="Foto del producto"
+                        />
                         <div
                             className={twMerge(
                                 'flex flex-col justify-between gap-2.5 w-[300px] h-[200px]',
@@ -96,7 +91,7 @@ export const Modal = ({
                     {!error && !isLoading && (
                         <button
                             id="add"
-                            className='p-2.5 flex gap-2.5'
+                            className="p-2.5 flex gap-2.5"
                             onClick={() =>
                                 addItem({
                                     id: data.response.id,
@@ -106,19 +101,11 @@ export const Modal = ({
                             }
                         >
                             <div className="btn-logo add-btn" />
-                            <span className='text-xl'>Agregar</span>
+                            <span className="text-xl">Agregar</span>
                         </button>
                     )}
-                </div>
+                </>
             )}
-            <div
-                id="modal-background"
-                className={twMerge(
-                    'fixed inset-0 bg-black/20 backdrop-blur-sm hidden justify-center items-center',
-                    open && 'flex',
-                )}
-                onClick={onClose}
-            />
-        </>
+        </Modal>
     );
 };

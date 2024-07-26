@@ -1,7 +1,7 @@
 'use client';
 
 import useAuth from '~/hooks/useAuth';
-import { Modal } from '../../components/menu/Modal';
+import { ProductModal } from '../../components/menu/ProductModal';
 import { Pedido } from '../../components/menu/Pedido';
 import { Sections } from '../../components/menu/Sections';
 import { useState } from 'react';
@@ -31,7 +31,7 @@ const Menu = () => {
                 />
                 <Pedido />
             </div>
-            <Modal
+            <ProductModal
                 itemId={featuredItemId}
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
