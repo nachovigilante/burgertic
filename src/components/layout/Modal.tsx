@@ -16,8 +16,6 @@ export function Modal({
                     'fixed box opacity-0 pointer-events-none p-8 transition-all duration-300 ease-in-out top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 shadow-large',
                     open && 'opacity-100 pointer-events-auto',
                 )}
-                onBlur={onClose}
-                tabIndex={1}
             >
                 {children}
             </div>

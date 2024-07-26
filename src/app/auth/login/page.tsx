@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Form } from '../../../components/auth/Form';
 import useAuth from '~/hooks/useAuth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Login = () => {
@@ -15,7 +15,6 @@ const Login = () => {
         e.preventDefault();
         const email = e.currentTarget.email.value;
         const password = e.currentTarget.password.value;
-        console.log(`Login with email: ${email} and password: ${password}`);
         const result = await login(email, password);
         if (result instanceof Error) {
             setError(result.message);
@@ -25,7 +24,9 @@ const Login = () => {
         }
     };
 
-    if (user.id !== -1) router.push('/');
+    useEffect(() => {
+        if (user.id !== -1) router.push('/');
+    }, [user]);
 
     return (
         <>
@@ -37,22 +38,11 @@ const Login = () => {
             <Form title="Login" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-2 text-lg">
                     <label htmlFor="email">Email</label>
-                    <input
-                        tabIndex={0}
-                        className="border border-gray-400 rounded-lg p-3"
-                        type="email"
-                        name="email"
-                        id="email"
-                    />
+                    <input tabIndex={0} type="email" name="email" id="email" />
                 </div>
                 <div className="flex flex-col gap-2 text-lg">
                     <label htmlFor="password">Contraseña</label>
-                    <input
-                        className="border border-gray-400 rounded-lg p-3"
-                        type="password"
-                        name="password"
-                        id="password"
-                    />
+                    <input type="password" name="password" id="password" />
                 </div>
                 <button className="bg-primary p-3 text-white text-xl mt-3 rounded-lg hover:bg-hover active:bg-active">
                     Ingresar

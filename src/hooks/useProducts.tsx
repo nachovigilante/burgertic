@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useAPIQuery from './useAPIQuery';
 
 export type Product = {
@@ -6,9 +6,12 @@ export type Product = {
     nombre: string;
     precio: number;
     descripcion: string;
+    tipo: string;
 };
 
+
 const useProducts = () => {
+    const queryClient = useQueryClient();
     const { query, mutation } = useAPIQuery();
 
     const {
@@ -82,6 +85,7 @@ const useProducts = () => {
                     nombre: string;
                     precio: number;
                     descripcion: string;
+                    tipo: string;
                 },
                 { message: string }
             >(
@@ -90,9 +94,16 @@ const useProducts = () => {
                     nombre: product.nombre,
                     precio: product.precio,
                     descripcion: product.descripcion,
+                    tipo: product.tipo,
                 },
                 true,
+                'PUT',
             );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['products'],
+            });
         },
     });
 
@@ -126,6 +137,9 @@ const useProducts = () => {
         deleteProduct,
         updateProduct,
         sections,
+        updateProductMutation,
+        deleteProductMutation,
+        addProductMutation,
     };
 };
 

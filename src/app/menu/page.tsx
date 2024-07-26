@@ -15,8 +15,8 @@ const Menu = () => {
     const { user } = useAuth();
     const router = useRouter();
 
-    if (user.id === -1) {
-        router.push('/auth/login');
+    if (!user) {
+        router.push('/');
         return null;
     }
 
@@ -36,7 +36,6 @@ const Menu = () => {
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
             />
-            <div id="modal-background"></div>
         </CartProvider>
     );
 };

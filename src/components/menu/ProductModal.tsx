@@ -50,7 +50,6 @@ export const ProductModal = ({
             {data && data.response && (
                 <>
                     <button
-                        id="close"
                         className="absolute top-2.5 right-2.5 text-3xl cursor-pointer transition-all duration-300 ease-in-out h-[30px] w-[30px] border-none outline-none rounded-lg"
                         onClick={onClose}
                     >
@@ -59,8 +58,8 @@ export const ProductModal = ({
                     <div className="flex items-center justify-between gap-10">
                         <img
                             className="h-[300px] w-[300px] object-cover rounded-[10px]"
-                            src="./assets/items/1.png"
-                            alt="Foto del producto"
+                            src="/assets/items/1.png"
+                            alt={`Imagen de ${data.response.nombre}`}
                         />
                         <div
                             className={twMerge(

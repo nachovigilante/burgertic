@@ -26,21 +26,20 @@ const useAPIQuery = () => {
         path: string,
         data: T,
         auth: boolean = false,
+        method: string = 'POST',
     ) => {
         let token = null;
 
         if (auth) token = localStorage.getItem('token');
 
         const response = await fetch(`http://localhost:9000${path}`, {
-            method: 'POST',
+            method,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: auth ? `Bearer ${token}` : '',
             },
             body: JSON.stringify(data),
         });
-
-        console.log(response);
 
         if (response.status !== 200) {
             return {

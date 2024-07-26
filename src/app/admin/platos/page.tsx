@@ -1,9 +1,25 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { AdminProductModal } from '~/components/admin/AdminProductModal';
+import LogoButton from '~/components/utils/Button';
+import useAuth from '~/hooks/useAuth';
 import useProducts from '~/hooks/useProducts';
 
 const Admin = () => {
+    const [featuredItemId, setFeaturedItemId] = useState(1);
+    const [modalOpen, setModalOpen] = useState(false);
     const { products } = useProducts();
+
+    const { user } = useAuth();
+
+    const router = useRouter();
+
+    if (!user) {
+        router.push('/');
+        return null;
+    }
 
     return (
         <div className="container pt-10 flex flex-col items-center pb-10 min-h-[600px] gap-10">
@@ -33,12 +49,21 @@ const Admin = () => {
                                 </td>
                                 <td>
                                     <div className="flex gap-2 items-center justify-center h-full px-2">
-                                        <button className="p-2 rounded-lg">
-                                            <div className="btn-logo edit-btn h-5 w-5" />
-                                        </button>
-                                        <button className="p-2 rounded-lg">
-                                            <div className="btn-logo delete-btn h-5 w-5" />
-                                        </button>
+                                        <LogoButton
+                                            className="p-2 rounded-lg"
+                                            logo="edit"
+                                            onClick={() => {
+                                                setFeaturedItemId(product.id);
+                                                setModalOpen(true);
+                                            }}
+                                        />
+                                        <LogoButton
+                                            className="p-2 rounded-lg"
+                                            logo="delete"
+                                            onClick={() => {
+                                                console.log('delete');
+                                            }}
+                                        />
                                     </div>
                                 </td>
                             </tr>
@@ -46,6 +71,11 @@ const Admin = () => {
                     </tbody>
                 </table>
             </div>
+            <AdminProductModal
+                itemId={featuredItemId}
+                open={modalOpen}
+                onClose={() => setModalOpen(false)}
+            />
         </div>
     );
 };

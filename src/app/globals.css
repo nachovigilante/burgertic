@@ -27,6 +27,47 @@
     font-family: 'Flame Sans', sans-serif;
 }
 
+@layer base {
+    h1,
+    h2,
+    h3 {
+        font-family: 'Flame', sans-serif;
+        font-weight: 500;
+        color: #55291a;
+    }
+
+    button {
+        border: none;
+        background-color: #d72300;
+        outline: none;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    button:hover {
+        background-color: #b21e00;
+    }
+
+    button:active {
+        background-color: #8c1900;
+    }
+
+    input[type='text'],
+    input[type='number'],
+    input[type='password'],
+    input[type='email'],
+    textarea,
+    select {
+        @apply border border-gray-400 rounded-lg p-3;
+    }
+}
+
 @layer components {
     .box {
         @apply shadow-standard;
@@ -65,38 +106,6 @@
 
     .close-btn {
         background-image: url(/assets/close.png);
-    }
-}
-
-@layer base {
-    h1,
-    h2,
-    h3 {
-        font-family: 'Flame', sans-serif;
-        font-weight: 500;
-        color: #55291a;
-    }
-
-    button {
-        border: none;
-        background-color: #d72300;
-        outline: none;
-        cursor: pointer;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        font-size: 20px;
-        font-weight: 700;
-    }
-
-    button:hover {
-        background-color: #b21e00;
-    }
-
-    button:active {
-        background-color: #8c1900;
     }
 }
 
