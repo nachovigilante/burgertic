@@ -11,9 +11,9 @@ const useAPIQuery = () => {
         });
 
         if (response.status !== 200) {
-            return {
-                status: response.status,
-            };
+            throw new Error(
+                ((await response.json()) as { message: string }).message,
+            );
         }
 
         return {

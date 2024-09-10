@@ -1,25 +1,21 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { redirect } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { AdminProductModal } from '~/components/admin/AdminProductModal';
 import LogoButton from '~/components/utils/Button';
 import useAuth from '~/hooks/useAuth';
+import useFeaturedProduct from '~/hooks/useFeaturedProdcut';
 import useProducts from '~/hooks/useProducts';
 
 const Admin = () => {
-    const [featuredItemId, setFeaturedItemId] = useState(1);
+    const { featuredProduct, setFeaturedProduct } = useFeaturedProduct();
     const [modalOpen, setModalOpen] = useState(false);
     const { products } = useProducts();
 
     const { user } = useAuth();
 
-    const router = useRouter();
-
-    if (!user) {
-        router.push('/');
-        return null;
-    }
+    if (user.id === -1) redirect('/');
 
     return (
         <div className="container pt-10 flex flex-col items-center pb-10 min-h-[600px] gap-10">
@@ -53,7 +49,7 @@ const Admin = () => {
                                             className="p-2 rounded-lg"
                                             logo="edit"
                                             onClick={() => {
-                                                setFeaturedItemId(product.id);
+                                                setFeaturedProduct(product);
                                                 setModalOpen(true);
                                             }}
                                         />
@@ -72,7 +68,7 @@ const Admin = () => {
                 </table>
             </div>
             <AdminProductModal
-                itemId={featuredItemId}
+                featuredProduct={featuredProduct}
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
             />

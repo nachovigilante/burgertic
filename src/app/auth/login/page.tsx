@@ -3,13 +3,12 @@
 import Link from 'next/link';
 import { Form } from '../../../components/auth/Form';
 import useAuth from '~/hooks/useAuth';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
+import { redirect } from 'next/navigation';
 
 const Login = () => {
     const { user, login } = useAuth();
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -20,13 +19,10 @@ const Login = () => {
             setError(result.message);
         } else {
             setError(null);
-            router.push('/');
         }
     };
 
-    useEffect(() => {
-        if (user.id !== -1) router.push('/');
-    }, [user]);
+    if (user.id !== -1) redirect('/');
 
     return (
         <>

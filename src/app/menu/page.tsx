@@ -6,17 +6,16 @@ import { Pedido } from '../../components/menu/Pedido';
 import { Sections } from '../../components/menu/Sections';
 import { useState } from 'react';
 import { CartProvider } from '~/contexts/CartContext';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 const Menu = () => {
     const [featuredItemId, setFeaturedItemId] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
 
     const { user } = useAuth();
-    const router = useRouter();
 
     if (!user) {
-        router.push('/');
+        redirect('/');
         return null;
     }
 

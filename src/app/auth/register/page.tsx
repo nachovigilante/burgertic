@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
 import { useState } from 'react';
 import { Form } from '~/components/auth/Form';
 import useAuth from '~/hooks/useAuth';
@@ -9,7 +9,6 @@ import useAuth from '~/hooks/useAuth';
 const Register = () => {
     const { register } = useAuth();
     const [error, setError] = useState<string | null>(null);
-    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -26,7 +25,7 @@ const Register = () => {
             console.log(result.message);
             setError(result.message);
         } else {
-            router.push('/auth/login');
+            redirect('/auth/login');
         }
     };
 
