@@ -3,6 +3,7 @@
 import { redirect } from 'next/navigation';
 import { useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { LoadingSpinner } from '~/components/utils/LoadingSpinner';
 import useAuth from '~/hooks/useAuth';
 import useOrders from '~/hooks/useOrders';
 
@@ -72,7 +73,7 @@ const Pedidos = () => {
     return (
         <div className="container pt-10 flex flex-col items-center pb-10 min-h-screen">
             <h2 className="text-3xl w-full">Tus pedidos</h2>
-            {isLoading && <p>Cargando...</p>}
+            {isLoading && <LoadingSpinner />}
             {error && <p>Error</p>}
             {orders && orders.length === 0 && (
                 <p className="text-2xl py-40 text-gray-500">

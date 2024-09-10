@@ -1,6 +1,7 @@
 'use client';
 
 import useProducts, { Product } from '~/hooks/useProducts';
+import { LoadingSpinner } from '../utils/LoadingSpinner';
 
 const Section = ({
     title,
@@ -21,7 +22,7 @@ const Section = ({
         <section className="flex flex-col gap-2.5 max-w-[1000px]">
             <h2 className="text-3xl font-bold mb-5 mt-8">{title}</h2>
             <div className="flex flex-wrap gap-5" id={type}>
-                {isLoading && <p>Cargando...</p>}
+                {isLoading && <LoadingSpinner />}
                 {error && <p>Error</p>}
                 {data &&
                     data.map((plato: Product, i: number) => (

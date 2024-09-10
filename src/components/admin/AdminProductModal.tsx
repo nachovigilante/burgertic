@@ -2,6 +2,7 @@ import useProducts, { Product } from '~/hooks/useProducts';
 import { Modal } from '../layout/Modal';
 import LogoButton from '../utils/Button';
 import { useEffect, useRef } from 'react';
+import { LoadingSpinner } from '../utils/LoadingSpinner';
 
 export const AdminProductModal = ({
     featuredProduct,
@@ -16,8 +17,9 @@ export const AdminProductModal = ({
         updateProduct,
         updateProductMutation: {
             isPending: isUpdating,
-            isError: updateError,
+            error: updateError,
             isSuccess: updateSuccess,
+            reset: resetUpdateProduct,
         },
     } = useProducts();
     const formRef = useRef<HTMLFormElement>(null);
@@ -25,12 +27,13 @@ export const AdminProductModal = ({
     // Load the featured product data into the form
     useEffect(() => {
         if (!featuredProduct) return;
-        if(!formRef.current) return;
+        if (!formRef.current) return;
 
         formRef.current.nombre.value = featuredProduct.nombre;
         formRef.current.descripcion.value = featuredProduct.descripcion;
         formRef.current.precio.value = featuredProduct.precio;
         formRef.current.tipo.value = featuredProduct.tipo;
+        resetUpdateProduct();
     }, [featuredProduct]);
 
     if (!featuredProduct) return null;
@@ -53,11 +56,27 @@ export const AdminProductModal = ({
 
     return (
         <Modal open={open} onClose={onClose}>
-            <LogoButton
-                className="absolute top-2.5 right-2.5 text-3xl cursor-pointer transition-all duration-300 ease-in-out h-[30px] w-[30px] border-none outline-none rounded-lg"
+            {/* <LogoButton
+                className="absolute top-2.5 right-2.5 text-3xl cursor-pointer transition-all duration-300 ease-in-out h-[30px] w-[30px] border-none outline-none rounded-lg overflow-hidden"
                 logo="close"
                 onClick={onClose}
-            />
+            /> */}
+            {(updateError || updateSuccess || isUpdating) && (
+                <div className="absolute inset-0 top-0 left-0 bg-white z-[60] border flex justify-center items-center rounded-lg overflow-hidden">
+                    {updateSuccess && (
+                        <div className="flex flex-col justify-center items-center gap-4">
+                            <p className='text-xl'>Se ha actualizado el producto</p>
+                            <button onClick={onClose} className='py-2 px-4 font-medium text-lg'>Aceptar</button>
+                        </div>
+                    )}
+                    {updateError && (
+                        <div className="absolute inset-0 top-0 left-0 z-[60] border flex justify-center items-center text-xl">
+                            Ha ocurrido un error: {updateError.message}
+                        </div>
+                    )}
+                    {isUpdating && <LoadingSpinner />}
+                </div>
+            )}
             <form
                 className="flex flex-col items-center gap-5"
                 onSubmit={handleSubmit}
