@@ -10,7 +10,7 @@ const NavLink = ({ path, text }: { path: string; text: string }) => {
     return (
         <Link
             className={twMerge(
-                'no-underline text-black font-semibold text-[15px] px-4 py-2.5 rounded-[20px] transition-all duration-300 ease-in-out hover:bg-[#dedede]',
+                'no-underline text-black font-medium text-[15px] px-4 py-2.5 rounded-[20px] transition-all duration-300 ease-in-out hover:bg-[#dedede]',
                 pathname === path &&
                     'bg-[#d72300] hover:bg-[#d72300] text-white',
             )}

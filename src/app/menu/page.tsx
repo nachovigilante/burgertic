@@ -6,7 +6,6 @@ import { Pedido } from '../../components/menu/Pedido';
 import { Sections } from '../../components/menu/Sections';
 import { useState } from 'react';
 import { CartProvider } from '~/contexts/CartContext';
-import { redirect } from 'next/navigation';
 
 const Menu = () => {
     const [featuredItemId, setFeaturedItemId] = useState(1);
@@ -14,10 +13,7 @@ const Menu = () => {
 
     const { user } = useAuth();
 
-    if (!user) {
-        redirect('/');
-        return null;
-    }
+    const isAutehnticated = user.id > -1;
 
     return (
         <CartProvider>
@@ -28,7 +24,7 @@ const Menu = () => {
                         setModalOpen(true);
                     }}
                 />
-                <Pedido />
+                {isAutehnticated && <Pedido />}
             </div>
             <ProductModal
                 itemId={featuredItemId}

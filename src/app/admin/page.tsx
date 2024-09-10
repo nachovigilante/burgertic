@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import useAuth from '~/hooks/useAuth';
 
 function AdminLink({
@@ -24,12 +25,7 @@ function Admin() {
     const { user } = useAuth();
 
     if (!user.admin) {
-        return (
-            <div className="container pt-10 flex flex-col items-center pb-10">
-                <h2 className="text-3xl w-full">Admin</h2>
-                <p>No tienes permisos de administrador</p>
-            </div>
-        );
+        redirect('/login');
     }
 
     return (

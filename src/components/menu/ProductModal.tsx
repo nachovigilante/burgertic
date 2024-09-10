@@ -5,6 +5,7 @@ import useAPIQuery from '~/hooks/useAPIQuery';
 import { Product } from '~/hooks/useProducts';
 import { Modal } from '../layout/Modal';
 import { LoadingSpinner } from '../utils/LoadingSpinner';
+import useAuth from '~/hooks/useAuth';
 
 export const ProductModal = ({
     itemId,
@@ -24,6 +25,10 @@ export const ProductModal = ({
 
     const { addItem } = useCart();
 
+    const { user } = useAuth();
+
+    const isAutehnticated = user.id > -1;
+
     return (
         <Modal
             open={open}
@@ -38,9 +43,7 @@ export const ProductModal = ({
             {error && (
                 <div className="flex flex-col gap-2.5 justify-center px-10 py-8 bg-red-300 rounded-md border border-red-900">
                     <h2 className="text-2xl">Error</h2>
-                    <span className="text-xl">
-                        {error.message}
-                    </span>
+                    <span className="text-xl">{error.message}</span>
                     {/* <span className="text-xl">
                         La request no obtuvo respuesta en más de un segundo.
                     </span>
@@ -90,20 +93,24 @@ export const ProductModal = ({
                             </p>
                         </div>
                     </div>
-                    <button
-                        id="add"
-                        className="p-2.5 flex gap-2.5"
-                        onClick={() =>
-                            addItem({
-                                id: data.response.id,
-                                name: data.response.nombre,
-                                price: data.response.precio,
-                            })
-                        }
-                    >
-                        <div className="btn-logo add-btn" />
-                        <span className="text-xl relative -top-0.5">Agregar</span>
-                    </button>
+                    {isAutehnticated && (
+                        <button
+                            id="add"
+                            className="p-2.5 flex gap-2.5"
+                            onClick={() =>
+                                addItem({
+                                    id: data.response.id,
+                                    name: data.response.nombre,
+                                    price: data.response.precio,
+                                })
+                            }
+                        >
+                            <div className="btn-logo add-btn" />
+                            <span className="text-xl relative -top-0.5">
+                                Agregar
+                            </span>
+                        </button>
+                    )}
                 </div>
             )}
         </Modal>
