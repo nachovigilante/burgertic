@@ -44,13 +44,6 @@ export const ProductModal = ({
                 <div className="flex flex-col gap-2.5 justify-center px-10 py-8 bg-red-300 rounded-md border border-red-900">
                     <h2 className="text-2xl">Error</h2>
                     <span className="text-xl">{error.message}</span>
-                    {/* <span className="text-xl">
-                        La request no obtuvo respuesta en más de un segundo.
-                    </span>
-                    <span className="text-xl">
-                        Probablemente no estés respondiendo nada en el endpoint
-                        o no esté prendido el server.
-                    </span> */}
                 </div>
             )}
             {data && data.response && !error && (

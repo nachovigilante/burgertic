@@ -15,7 +15,7 @@ function AdminLink({
 }) {
     return (
         <Link className="flex flex-col box p-5 gap-2.5" href={href}>
-            <img src={image} alt="platos" width="300px" />
+            <img src={image} alt="platos" width="300px" height="200px" className='rounded-md' />
             <h2 className="text-2xl">{title}</h2>
         </Link>
     );
@@ -45,7 +45,7 @@ function Admin() {
                 <AdminLink
                     href="/admin/pedidos"
                     title="Administrar pedidos"
-                    image="/assets/items/3.png"
+                    image="/assets/pedidos.png"
                 />
             </div>
         </div>

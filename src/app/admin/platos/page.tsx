@@ -9,9 +9,10 @@ import useFeaturedProduct from '~/hooks/useFeaturedProdcut';
 import useProducts from '~/hooks/useProducts';
 
 const Admin = () => {
-    const { featuredProduct, setFeaturedProduct } = useFeaturedProduct();
+    const { featuredProduct, setFeaturedProduct, clearFeaturedProduct } = useFeaturedProduct();
     const [modalOpen, setModalOpen] = useState(false);
-    const { products } = useProducts();
+    const [action, setAction] = useState<'update' | 'create'>('create');
+    const { products, deleteProduct } = useProducts();
 
     const { user } = useAuth();
 
@@ -19,7 +20,19 @@ const Admin = () => {
 
     return (
         <div className="container pt-10 flex flex-col items-center pb-10 min-h-[600px] gap-10">
-            <h2 className="text-3xl w-full">Administrador de platos</h2>
+            <div className="flex justify-between w-full">
+                <h2 className="text-3xl w-full">Administrador de platos</h2>
+                <button className='w-[220px] gap-2 py-2' onClick={() => {
+                    clearFeaturedProduct();
+                    setAction('create');
+                    setModalOpen(true);
+                }}>
+                    <div className="btn-logo add-btn" />
+                    <span className="text-xl relative -top-0.5">
+                        Agregar plato
+                    </span>
+                </button>
+            </div>
             <div className="box px-5 pb-5">
                 <table>
                     <thead className="border-b-2">
@@ -50,6 +63,7 @@ const Admin = () => {
                                             logo="edit"
                                             onClick={() => {
                                                 setFeaturedProduct(product);
+                                                setAction('update');
                                                 setModalOpen(true);
                                             }}
                                         />
@@ -57,7 +71,7 @@ const Admin = () => {
                                             className="p-2 rounded-lg"
                                             logo="delete"
                                             onClick={() => {
-                                                console.log('delete');
+                                                deleteProduct(product.id);
                                             }}
                                         />
                                     </div>
@@ -71,6 +85,7 @@ const Admin = () => {
                 featuredProduct={featuredProduct}
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
+                action={action}
             />
         </div>
     );
