@@ -1,7 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { LoadingSpinner } from '~/components/utils/LoadingSpinner';
 import useAuth from '~/hooks/useAuth';
 import useOrders from '~/hooks/useOrders';
 
@@ -65,20 +67,18 @@ const Pedido = ({
 const Pedidos = () => {
     const { orders, isLoading, error } = useOrders();
     const { user } = useAuth();
-    const router = useRouter();
 
-    if (user.id === -1) {
-        router.push('/auth/login');
-        return null;
-    }
+    if (user.id === -1) redirect('/auth/login');
 
     return (
-        <div className="container pt-10 flex flex-col items-center pb-10">
+        <div className="container pt-10 flex flex-col items-center pb-10 min-h-screen">
             <h2 className="text-3xl w-full">Tus pedidos</h2>
-            {isLoading && <p>Cargando...</p>}
+            {isLoading && <LoadingSpinner />}
             {error && <p>Error</p>}
             {orders && orders.length === 0 && (
-                <p className="text-2xl pt-20">No hay pedidos :(</p>
+                <p className="text-2xl py-40 text-gray-500">
+                    Usted todavía no ha hecho ningún pedido :(
+                </p>
             )}
             {orders && (
                 <ul className="mt-8 flex flex-col gap-3 max-w-[600px] w-full">

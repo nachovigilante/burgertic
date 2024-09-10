@@ -27,6 +27,47 @@
     font-family: 'Flame Sans', sans-serif;
 }
 
+@layer base {
+    h1,
+    h2,
+    h3 {
+        font-family: 'Flame', sans-serif;
+        font-weight: 500;
+        color: #55291a;
+    }
+
+    button {
+        border: none;
+        background-color: #d72300;
+        outline: none;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+
+    button:hover {
+        background-color: #b21e00;
+    }
+
+    button:active {
+        background-color: #8c1900;
+    }
+
+    input[type='text'],
+    input[type='number'],
+    input[type='password'],
+    input[type='email'],
+    textarea,
+    select {
+        @apply border border-gray-400 rounded-lg p-3;
+    }
+}
+
 @layer components {
     .box {
         @apply shadow-standard;
@@ -59,40 +100,65 @@
         background-image: url(/assets/delete.svg);
     }
 
+    .edit-btn {
+        background-image: url(/assets/edit.svg);
+    }
+
     .close-btn {
         background-image: url(/assets/close.png);
     }
-}
 
-@layer base {
-    h1,
-    h2,
-    h3 {
-        font-family: 'Flame', sans-serif;
-        font-weight: 500;
-        color: #55291a;
+    .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        position: relative;
+        animation: rotate 1s linear infinite;
     }
 
-    button {
-        border: none;
-        background-color: #d72300;
-        outline: none;
-        cursor: pointer;
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 10px;
-        font-size: 20px;
-        font-weight: 700;
+    .loader::before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        inset: 0px;
+        border-radius: 50%;
+        border: 5px solid #d72300;
+        animation: prixClipFix 2s linear infinite;
     }
 
-    button:hover {
-        background-color: #b21e00;
+    .loader.light {
+        border: 5px solid white;
     }
 
-    button:active {
-        background-color: #8c1900;
+    @keyframes rotate {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes prixClipFix {
+        0% {
+            clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0);
+        }
+        25% {
+            clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0);
+        }
+        50% {
+            clip-path: polygon(
+                50% 50%,
+                0 0,
+                100% 0,
+                100% 100%,
+                100% 100%,
+                100% 100%
+            );
+        }
+        75% {
+            clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 100%);
+        }
+        100% {
+            clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0);
+        }
     }
 }
 

@@ -12,15 +12,15 @@ const Navbar = () => {
                 <li>
                     <NavLink path="/" text="Home" />
                 </li>
+                <li>
+                    <NavLink path="/menu" text="Menu" />
+                </li>
                 {user.id === -1 ? (
                     <li>
                         <NavLink path="/auth/login" text="Log in" />
                     </li>
                 ) : (
                     <>
-                        <li>
-                            <NavLink path="/menu" text="Menu" />
-                        </li>
                         <li>
                             <NavLink path="/pedidos" text="Pedidos" />
                         </li>

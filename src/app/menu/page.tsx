@@ -1,24 +1,19 @@
 'use client';
 
 import useAuth from '~/hooks/useAuth';
-import { Modal } from '../../components/menu/Modal';
+import { ProductModal } from '../../components/menu/ProductModal';
 import { Pedido } from '../../components/menu/Pedido';
 import { Sections } from '../../components/menu/Sections';
 import { useState } from 'react';
 import { CartProvider } from '~/contexts/CartContext';
-import { useRouter } from 'next/navigation';
 
 const Menu = () => {
     const [featuredItemId, setFeaturedItemId] = useState(1);
     const [modalOpen, setModalOpen] = useState(false);
 
     const { user } = useAuth();
-    const router = useRouter();
 
-    if (user.id === -1) {
-        router.push('/auth/login');
-        return null;
-    }
+    const isAutehnticated = user.id > -1;
 
     return (
         <CartProvider>
@@ -29,14 +24,13 @@ const Menu = () => {
                         setModalOpen(true);
                     }}
                 />
-                <Pedido />
+                {isAutehnticated && <Pedido />}
             </div>
-            <Modal
+            <ProductModal
                 itemId={featuredItemId}
                 open={modalOpen}
                 onClose={() => setModalOpen(false)}
             />
-            <div id="modal-background"></div>
         </CartProvider>
     );
 };

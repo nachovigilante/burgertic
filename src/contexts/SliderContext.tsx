@@ -77,7 +77,6 @@ export const SliderProvider = ({ children }: { children: ReactNode }) => {
         };
 
         const interval = setInterval(() => {
-            console.log('AAAAAA');
             setCurrentIndex((currentIndex) => (currentIndex + 1) % slidesCount);
         }, 3000);
 

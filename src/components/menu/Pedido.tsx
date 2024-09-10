@@ -1,6 +1,7 @@
 import useCart from '~/hooks/useCart';
 import { CartItem } from '~/contexts/CartContext';
 import useOrders from '~/hooks/useOrders';
+import { LoadingSpinner } from '../utils/LoadingSpinner';
 
 const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
     const { addItem, removeItem } = useCart();
@@ -95,10 +96,15 @@ export const Pedido = () => {
             {(placeOrderPending || placeOrderSuccess || placeOrderError) && (
                 <div className="absolute w-full h-full bg-white -ml-[25px] -mt-[25px] rounded-[10px] flex flex-col gap-3 justify-center items-center">
                     <div className="flex justify-center items-center flex-grow text-2xl">
-                        {placeOrderPending && <p>Enviando pedido...</p>}
+                        {placeOrderPending && (
+                            <div className="flex flex-col gap-2 justify-center items-center">
+                                <LoadingSpinner />
+                                <p>Enviando pedido...</p>
+                            </div>
+                        )}
                         {placeOrderSuccess && <p>Pedido enviado!</p>}
                         {placeOrderError && (
-                            <p>
+                            <p className="bg-red-300 p-4 rounded-md m-4 text-red-800">
                                 Error al enviar el pedido:{' '}
                                 {placeOrderError.message}
                             </p>
