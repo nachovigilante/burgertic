@@ -3,7 +3,7 @@ import { CartItem } from '~/contexts/CartContext';
 import useOrders from '~/hooks/useOrders';
 import { LoadingSpinner } from '../utils/LoadingSpinner';
 
-const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
+const CartItemDisplay = ({ product: { item, quantity } }: { product: CartItem }) => {
     const { addItem, removeItem } = useCart();
 
     return (
@@ -42,7 +42,7 @@ const PedidoItem = ({ product: { item, quantity } }: { product: CartItem }) => {
     );
 };
 
-export const Pedido = () => {
+export const Cart = () => {
     const { cartItems, resetCart } = useCart();
     const {
         placeOrder,
@@ -65,7 +65,7 @@ export const Pedido = () => {
                     </p>
                 )}
                 {cartItems.map((item, i) => (
-                    <PedidoItem key={i} product={item} />
+                    <CartItemDisplay key={i} product={item} />
                 ))}
             </ul>
             {cartItems.length > 0 && (

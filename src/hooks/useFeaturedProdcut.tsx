@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import { Product } from '~/hooks/useProducts';
 
-export default function useFeaturedProduct() {
-    const [product, setProduct] = useState<Product | null>(null);
+export default function useFeaturedItem<T>() {
+    const [item, setItem] = useState<T | null>(null);
 
-    const clearFeaturedProduct = () => {
-        setProduct(null);
+    const clearFeaturedItem = () => {
+        setItem(null);
     };
 
-    const setFeaturedProduct = (product: Product) => {
-        setProduct(product);
+    const setFeaturedItem = (item: T) => {
+        setItem(item);
     };
 
     return {
-        featuredProduct: product,
-        setFeaturedProduct,
-        clearFeaturedProduct,
+        featuredItem: item,
+        setFeaturedItem,
+        clearFeaturedItem,
     };
 }
