@@ -96,7 +96,7 @@ const useOrders = () => {
     };
 
     return {
-        orders: orders?.response,
+        orders: orders?.response.sort((o1, o2) => o2.id - o1.id),
         isLoading,
         error,
         placeOrder,

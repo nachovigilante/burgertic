@@ -137,24 +137,24 @@ const useProducts = () => {
 
     const sections = {
         combos: {
-            data: combos?.response,
+            data: combos?.response.sort((a, b) => a.id - b.id),
             loading: combosLoading,
             error: combosError,
         },
         mains: {
-            data: mains?.response,
+            data: mains?.response.sort((a, b) => a.id - b.id),
             loading: mainsLoading,
             error: mainsError,
         },
         desserts: {
-            data: desserts?.response,
+            data: desserts?.response.sort((a, b) => a.id - b.id),
             loading: dessertsLoading,
             error: dessertsError,
         },
     };
 
     return {
-        products: products?.response,
+        products: products?.response.sort((a, b) => a.id - b.id),
         productsLoading,
         productsError,
         addProduct,

@@ -123,11 +123,9 @@ const Pedidos = () => {
             )}
             {orders && (
                 <div className="mt-8 flex flex-col gap-3 max-w-[600px] w-full">
-                    {orders
-                        .sort((o1, o2) => o1.id - o2.id)
-                        .map((order) => (
-                            <Pedido {...order} key={order.id} />
-                        ))}
+                    {orders.map((order) => (
+                        <Pedido {...order} key={order.id} />
+                    ))}
                 </div>
             )}
         </div>

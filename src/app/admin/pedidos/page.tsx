@@ -27,11 +27,9 @@ const Admin = () => {
             )}
             {orders && (
                 <div className="flex flex-col gap-3 max-w-[600px] w-full">
-                    {orders
-                        .sort((o1, o2) => o1.id - o2.id)
-                        .map((order) => (
-                            <Pedido {...order} key={order.id} admin />
-                        ))}
+                    {orders.map((order) => (
+                        <Pedido {...order} key={order.id} admin />
+                    ))}
                 </div>
             )}
         </div>
