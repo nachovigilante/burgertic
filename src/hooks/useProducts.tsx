@@ -9,7 +9,6 @@ export type Product = {
     tipo: string;
 };
 
-
 const useProducts = () => {
     const queryClient = useQueryClient();
     const { query, mutation } = useAPIQuery();
@@ -51,16 +50,35 @@ const useProducts = () => {
     });
 
     const addProductMutation = useMutation({
-        mutationFn: (product: Product) => {
-            return mutation<Product, { message: string }>(
-                '/platos',
-                product,
-                true,
-            );
+        mutationFn: (product: {
+            nombre: string;
+            precio: number;
+            descripcion: string;
+            tipo: string;
+        }) => {
+            return mutation<
+                {
+                    nombre: string;
+                    precio: number;
+                    descripcion: string;
+                    tipo: string;
+                },
+                { message: string }
+            >('/platos', product, true);
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['products'],
+            });
         },
     });
 
-    const addProduct = (product: Product) => {
+    const addProduct = (product: {
+        nombre: string;
+        precio: number;
+        descripcion: string;
+        tipo: string;
+    }) => {
         addProductMutation.mutate(product);
     };
 
@@ -70,7 +88,13 @@ const useProducts = () => {
                 `/platos/${id}`,
                 { id },
                 true,
+                'DELETE',
             );
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['products'],
+            });
         },
     });
 
@@ -113,17 +137,17 @@ const useProducts = () => {
 
     const sections = {
         combos: {
-            data: combos?.response,
+            data: combos?.response.sort((a, b) => a.id - b.id),
             loading: combosLoading,
             error: combosError,
         },
         mains: {
-            data: mains?.response,
+            data: mains?.response.sort((a, b) => a.id - b.id),
             loading: mainsLoading,
             error: mainsError,
         },
         desserts: {
-            data: desserts?.response,
+            data: desserts?.response.sort((a, b) => a.id - b.id),
             loading: dessertsLoading,
             error: dessertsError,
         },

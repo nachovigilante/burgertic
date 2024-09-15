@@ -2,7 +2,7 @@
 
 import useAuth from '~/hooks/useAuth';
 import { ProductModal } from '../../components/menu/ProductModal';
-import { Pedido } from '../../components/menu/Pedido';
+import { Cart } from '../../components/menu/Pedido';
 import { Sections } from '../../components/menu/Sections';
 import { useState } from 'react';
 import { CartProvider } from '~/contexts/CartContext';
@@ -24,7 +24,7 @@ const Menu = () => {
                         setModalOpen(true);
                     }}
                 />
-                {isAutehnticated && <Pedido />}
+                {isAutehnticated && <Cart />}
             </div>
             <ProductModal
                 itemId={featuredItemId}

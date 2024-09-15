@@ -1,6 +1,5 @@
 import useProducts, { Product } from '~/hooks/useProducts';
 import { Modal } from '../layout/Modal';
-import LogoButton from '../utils/Button';
 import { useEffect, useRef } from 'react';
 import { LoadingSpinner } from '../utils/LoadingSpinner';
 
@@ -8,10 +7,12 @@ export const AdminProductModal = ({
     featuredProduct,
     open,
     onClose,
+    action,
 }: {
     featuredProduct: Product | null;
     open: boolean;
     onClose: () => void;
+    action: 'update' | 'create';
 }) => {
     const {
         updateProduct,
@@ -21,22 +22,30 @@ export const AdminProductModal = ({
             isSuccess: updateSuccess,
             reset: resetUpdateProduct,
         },
+        addProduct,
+        addProductMutation: {
+            isPending: isAdding,
+            error: addError,
+            isSuccess: addSuccess,
+            reset: resetAddProduct,
+        },
     } = useProducts();
     const formRef = useRef<HTMLFormElement>(null);
 
     // Load the featured product data into the form
     useEffect(() => {
-        if (!featuredProduct) return;
         if (!formRef.current) return;
+
+        if (!featuredProduct) {
+            formRef.current.reset();
+            return;
+        }
 
         formRef.current.nombre.value = featuredProduct.nombre;
         formRef.current.descripcion.value = featuredProduct.descripcion;
         formRef.current.precio.value = featuredProduct.precio;
         formRef.current.tipo.value = featuredProduct.tipo;
-        resetUpdateProduct();
     }, [featuredProduct]);
-
-    if (!featuredProduct) return null;
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -45,17 +54,29 @@ export const AdminProductModal = ({
         const precio = e.currentTarget.precio.value;
         const tipo = e.currentTarget.tipo.value;
 
-        updateProduct({
-            id: featuredProduct.id,
-            nombre,
-            descripcion,
-            precio,
-            tipo,
-        });
+        if (action === 'update') {
+            if (!featuredProduct) throw new Error('No product to update');
+            updateProduct({
+                id: featuredProduct.id,
+                nombre,
+                descripcion,
+                precio,
+                tipo,
+            });
+        } else {
+            addProduct({ nombre, descripcion, precio, tipo });
+        }
+    };
+
+    const customClose = () => {
+        onClose();
+        resetUpdateProduct();
+        resetAddProduct();
+        if (formRef.current) formRef.current.reset();
     };
 
     return (
-        <Modal open={open} onClose={onClose}>
+        <Modal open={open} onClose={customClose}>
             {/* <LogoButton
                 className="absolute top-2.5 right-2.5 text-3xl cursor-pointer transition-all duration-300 ease-in-out h-[30px] w-[30px] border-none outline-none rounded-lg overflow-hidden"
                 logo="close"
@@ -65,8 +86,15 @@ export const AdminProductModal = ({
                 <div className="absolute inset-0 top-0 left-0 bg-white z-[60] border flex justify-center items-center rounded-lg overflow-hidden">
                     {updateSuccess && (
                         <div className="flex flex-col justify-center items-center gap-4">
-                            <p className='text-xl'>Se ha actualizado el producto</p>
-                            <button onClick={onClose} className='py-2 px-4 font-medium text-lg'>Aceptar</button>
+                            <p className="text-xl">
+                                Se ha actualizado el producto
+                            </p>
+                            <button
+                                onClick={onClose}
+                                className="py-2 px-4 font-medium text-lg"
+                            >
+                                Aceptar
+                            </button>
                         </div>
                     )}
                     {updateError && (
@@ -77,6 +105,27 @@ export const AdminProductModal = ({
                     {isUpdating && <LoadingSpinner />}
                 </div>
             )}
+            {(addError || addSuccess || isAdding) && (
+                <div className="absolute inset-0 top-0 left-0 bg-white z-[60] border flex justify-center items-center rounded-lg overflow-hidden">
+                    {addSuccess && (
+                        <div className="flex flex-col justify-center items-center gap-4">
+                            <p className="text-xl">Se ha creado el producto</p>
+                            <button
+                                onClick={customClose}
+                                className="py-2 px-4 font-medium text-lg"
+                            >
+                                Aceptar
+                            </button>
+                        </div>
+                    )}
+                    {addError && (
+                        <div className="absolute inset-0 top-0 left-0 z-[60] border flex justify-center items-center text-xl">
+                            Ha ocurrido un error: {addError.message}
+                        </div>
+                    )}
+                    {isAdding && <LoadingSpinner />}
+                </div>
+            )}
             <form
                 className="flex flex-col items-center gap-5"
                 onSubmit={handleSubmit}
@@ -85,7 +134,10 @@ export const AdminProductModal = ({
                 <div className="flex flex-col items-center justify-between gap-10">
                     <img
                         src="/assets/items/1.png"
-                        alt={`Imagen de ${featuredProduct.nombre}`}
+                        alt={`Imagen de ${
+                            (featuredProduct && featuredProduct.nombre) ||
+                            'producto'
+                        }`}
                         className="w-40 h-40 object-cover rounded-lg"
                     />
                     <div className="flex flex-col gap-5">
@@ -142,7 +194,7 @@ export const AdminProductModal = ({
                         className="px-5 py-2 font-medium"
                         onClick={(e) => {
                             e.preventDefault();
-                            onClose();
+                            customClose();
                         }}
                         tabIndex={1}
                     >

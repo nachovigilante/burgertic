@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import useAuth from '~/hooks/useAuth';
@@ -14,8 +15,14 @@ function AdminLink({
     image: string;
 }) {
     return (
-        <Link className="flex flex-col box p-5 gap-2.5" href={href}>
-            <img src={image} alt="platos" width="300px" />
+        <Link className="flex flex-col box p-5 gap-2.5 hover:bg-zinc-100 active:bg-zinc-200" href={href}>
+            <div
+                className="bg-no-repeat bg-center h-[300px] w-[300px] rounded-md bg-cover"
+                style={{
+                    backgroundImage: `url(${image})`,
+                }}
+                aria-label={`Imagen de ${title}`}
+            />
             <h2 className="text-2xl">{title}</h2>
         </Link>
     );
@@ -25,7 +32,7 @@ function Admin() {
     const { user } = useAuth();
 
     if (!user.admin) {
-        redirect('/login');
+        redirect('/auth/login');
     }
 
     return (
@@ -35,17 +42,12 @@ function Admin() {
                 <AdminLink
                     href="/admin/platos"
                     title="Administrar platos"
-                    image="/assets/items/1.png"
-                />
-                <AdminLink
-                    href="/admin/usuarios"
-                    title="Administrar usuarios"
-                    image="/assets/items/2.png"
+                    image="/assets/platos.png"
                 />
                 <AdminLink
                     href="/admin/pedidos"
                     title="Administrar pedidos"
-                    image="/assets/items/3.png"
+                    image="/assets/pedidos.png"
                 />
             </div>
         </div>

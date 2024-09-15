@@ -26,5 +26,14 @@ const config: Config = {
         },
     },
     plugins: [],
+    safelist: [
+        'add-btn',
+        'remove-btn',
+        'delete-btn',
+        'edit-btn',
+        'close-btn',
+        'sort-asc-btn',
+        'sort-desc-btn',
+    ],
 };
 export default config;
