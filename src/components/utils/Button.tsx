@@ -1,6 +1,8 @@
 import { twMerge } from 'tailwind-merge';
 
-export type ButtonLogo = 'add' | 'remove' | 'delete' | 'edit' | 'close';
+// Any logo added here should be added to the tailwindcss file as a safelist item with the postfix '-btn'
+// If not, the logo will not be displayed
+export type ButtonLogo = 'add' | 'remove' | 'delete' | 'edit' | 'close' | 'sort-asc' | 'sort-desc';
 
 export default function LogoButton({
     className,

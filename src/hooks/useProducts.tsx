@@ -154,7 +154,7 @@ const useProducts = () => {
     };
 
     return {
-        products: products?.response.sort((a, b) => a.id - b.id),
+        products: products?.response,
         productsLoading,
         productsError,
         addProduct,

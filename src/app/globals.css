@@ -1,8 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @font-face {
     font-family: Flame;
@@ -96,17 +96,26 @@
         background-image: url(/assets/remove.svg);
     }
 
-    .delete-btn {
-        background-image: url(/assets/delete.svg);
-    }
-
     .edit-btn {
         background-image: url(/assets/edit.svg);
+    }
+    
+    .delete-btn {
+        background-image: url(/assets/delete.svg);
     }
 
     .close-btn {
         background-image: url(/assets/close.png);
     }
+
+    .sort-asc-btn {
+        background-image: url(/assets/sort_asc.svg);
+    }
+
+    .sort-desc-btn {
+        background-image: url(/assets/sort_desc.svg);
+    }
+
 
     .loader {
         width: 48px;
