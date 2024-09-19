@@ -30,6 +30,15 @@ const useOrders = () => {
         error,
     } = useQuery({
         queryKey: ['orders'],
+        queryFn: () => query<Order[]>('/pedidos', true),
+    });
+
+    const {
+        data: userOrders,
+        isLoading: userOrdersLoading,
+        error: userOrdersError,
+    } = useQuery({
+        queryKey: ['orders-user'],
         queryFn: () => query<Order[]>('/pedidos/usuario', true),
     });
 
@@ -99,6 +108,9 @@ const useOrders = () => {
         orders: orders?.response.sort((o1, o2) => o2.id - o1.id),
         isLoading,
         error,
+        userOrders: userOrders?.response.sort((o1, o2) => o2.id - o1.id),
+        userOrdersLoading,
+        userOrdersError,
         placeOrder,
         placeOrderPending: orderMutation.isPending,
         placeOrderError: orderMutation.error,

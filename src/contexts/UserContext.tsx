@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 password,
             });
 
-            if (status !== 200) throw new Error('Error al registrar usuario');
+            if (status !== 200 && status !== 201) throw new Error('Error al registrar usuario');
 
             return true;
         } catch (e) {
