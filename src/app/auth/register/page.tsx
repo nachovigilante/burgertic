@@ -24,9 +24,10 @@ const Register = () => {
         if (result instanceof Error) {
             console.log(result.message);
             setError(result.message);
-        } else {
-            redirect('/auth/login');
+            return;
         }
+        
+        void redirect('/auth/login');
     };
 
     return (

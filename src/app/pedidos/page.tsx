@@ -106,7 +106,7 @@ export const Pedido = ({
 };
 
 const Pedidos = () => {
-    const { orders, isLoading, error } = useOrders();
+    const { userOrders, userOrdersLoading, userOrdersError } = useOrders();
     const { user } = useAuth();
 
     if (user.id === -1) redirect('/auth/login');
@@ -114,16 +114,16 @@ const Pedidos = () => {
     return (
         <div className="container pt-10 flex flex-col items-center pb-10 min-h-screen">
             <h2 className="text-3xl w-full">Tus pedidos</h2>
-            {isLoading && <LoadingSpinner />}
-            {error && <p>Error</p>}
-            {orders && orders.length === 0 && (
+            {userOrdersLoading && <LoadingSpinner />}
+            {userOrdersError && <p>Error</p>}
+            {userOrders && userOrders.length === 0 && (
                 <p className="text-2xl py-40 text-gray-500">
                     Usted todavía no ha hecho ningún pedido :(
                 </p>
             )}
-            {orders && (
+            {userOrders && (
                 <div className="mt-8 flex flex-col gap-3 max-w-[600px] w-full">
-                    {orders.map((order) => (
+                    {userOrders.map((order) => (
                         <Pedido {...order} key={order.id} />
                     ))}
                 </div>
